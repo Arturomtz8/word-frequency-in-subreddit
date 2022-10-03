@@ -1,6 +1,5 @@
 import os
 from collections import Counter
-
 import matplotlib.pyplot as plt
 import nltk
 import pandas as pd
@@ -111,25 +110,24 @@ def create_graph(df):
     else:
         sns.barplot(x="frequency", y="words_in_post_text", data=df.head(30))
     plt.savefig(
-        os.path.join(IMG_PATH_FILE, f"{axes.get_ylabel()}.pdf"),
+        os.path.join(IMG_PATH_FILE, f"{axes.get_ylabel()}.png"),
         bbox_inches="tight",
-        dpi=300,
+        dpi=150,
     )
     plt.close()
 
 
 def create_wordcloud(filename):
     text = read_txt_file(filename)
-    wordcloud = WordCloud(background_color="white", colormap="RdYlGn").generate(text)
+    wordcloud = WordCloud(colormap = 'ocean', background_color ='gold', min_font_size = 10).generate(text)
 
     # Display the generated image:
     # the matplotlib way:
     plt.imshow(wordcloud, interpolation="bilinear")
     plt.axis("off")
     plt.savefig(
-        os.path.join(IMG_PATH_FILE, f"wordcloud_{filename}.pdf"),
-        bbox_inches="tight",
-        dpi=300,
+        os.path.join(IMG_PATH_FILE, f"wordcloud_{filename}.png"),
+        bbox_inches="tight"
     )
     plt.close()
 
