@@ -26,6 +26,8 @@ jobs:
         poetry-version: "1.1.15"
     - name: Install poetry dependencies
       run: poetry install
+    - name: Install nltk dependencies
+      run: poetry run python -m nltk.downloader punkt stopwords wordnet omw-1.4
     - name: Run python script
       run: |
         poetry run python reddit_scraper.py
