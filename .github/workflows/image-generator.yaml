@@ -24,5 +24,30 @@ jobs:
       uses: abatilo/actions-poetry@v2
       with:
         poetry-version: "1.1.15"
-    - name: View poetry --help
-      run: poetry --help
+    - name: Install poetry dependencies
+      run: poetry install
+    - name: Run python script
+      run: |
+        poetry run python reddit_scraper.py
+    - name: Add & Commit
+      uses: EndBug/add-and-commit@v9.1.0
+      with:
+          # The arguments for the `git add` command (see the paragraph below for more info)
+          # Default: '.'
+          add: '-A'
+
+          # The name of the user that will be displayed as the author of the commit.
+          # Default: depends on the default_author input
+          author_name: Arturo Martínez
+
+          # The email of the user that will be displayed as the author of the commit.
+          # Default: depends on the default_author input
+          author_email: ${{ secrets.EMAIL }}
+
+          # The message for the commit.
+          # Default: 'Commit from GitHub Actions (name of the workflow)'
+          message: 'Daily run'
+
+          # Whether to push the commit and, if any, its tags to the repo. It can also be used to set the git push arguments (see the paragraph below for more info)
+          # Default: true
+          push: true
