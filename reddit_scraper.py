@@ -1,5 +1,6 @@
 import os
 from collections import Counter
+
 import matplotlib.pyplot as plt
 import nltk
 import pandas as pd
@@ -15,8 +16,8 @@ CSV_PATH_FILE = os.path.join(os.path.dirname(__file__), "csv_files")
 TXT_PATH_FILE = os.path.join(os.path.dirname(__file__), "text_files")
 IMG_PATH_FILE = os.path.join(os.path.dirname(__file__), "img_files")
 # attempt to remove 'u' from plots
-stopwords_personalized = nltk.corpus.stopwords.words('english')
-new_stopwords = ['u','/u']
+stopwords_personalized = nltk.corpus.stopwords.words("english")
+new_stopwords = ["u", "/u"]
 stopwords_personalized.extend(new_stopwords)
 
 
@@ -122,14 +123,15 @@ def create_graph(df):
 
 def create_wordcloud(filename):
     text = read_txt_file(filename)
-    wordcloud = WordCloud(colormap = 'ocean', background_color ='gold', min_font_size = 10).generate(text)
+    wordcloud = WordCloud(
+        colormap="ocean", background_color="gold", min_font_size=10
+    ).generate(text)
     # Display the generated image:
     # the matplotlib way:
     plt.imshow(wordcloud, interpolation="bilinear")
     plt.axis("off")
     plt.savefig(
-        os.path.join(IMG_PATH_FILE, f"wordcloud_{filename}.png"),
-        bbox_inches="tight"
+        os.path.join(IMG_PATH_FILE, f"wordcloud_{filename}.png"), bbox_inches="tight"
     )
     plt.close()
 
