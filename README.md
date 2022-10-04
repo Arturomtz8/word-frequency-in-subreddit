@@ -1,8 +1,9 @@
 # About
 A single script that brings the top 10 posts of r/Ghoststories daily and creates some images with word frequency like so:
-
-![Wordcloud for text in post](img_files/wordcloud_post_text.png)
-![Seaborn plot counting occurrences of words from text's post](img_files/words_in_post_text.png)
+<p align="center">
+    <img src="img_files/wordcloud_post_text.png">
+    <img src="img_files/words_in_post_text.png">
+</p>
 
 ## Prerequisites
 - Have a reddit account
