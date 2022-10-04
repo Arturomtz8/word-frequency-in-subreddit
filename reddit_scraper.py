@@ -5,8 +5,6 @@ import nltk
 import pandas as pd
 import praw
 import seaborn as sns
-# load in the NTLK stopwords to remove articles, preposition and other words that are not actionable
-from nltk.corpus import stopwords
 # Lemmatizer helps to reduce words to the base form
 from nltk.stem import WordNetLemmatizer
 # This allows to create individual objects from a bog of words
@@ -16,6 +14,10 @@ from wordcloud import WordCloud
 CSV_PATH_FILE = os.path.join(os.path.dirname(__file__), "csv_files")
 TXT_PATH_FILE = os.path.join(os.path.dirname(__file__), "text_files")
 IMG_PATH_FILE = os.path.join(os.path.dirname(__file__), "img_files")
+# attempt to remove 'u' from plots
+stopwords_personalized = nltk.corpus.stopwords.words('english')
+new_stopwords = ['u','/u']
+stopwords_personalized.extend(new_stopwords)
 
 
 def write_txt_files(all_posts, dict_key):
@@ -83,8 +85,9 @@ def word_freq(filename):
     # creates tokens, creates lower class, removes numbers and lemmatizes the words
     new_tokens = word_tokenize(text)
     new_tokens = [t.lower() for t in new_tokens]
-    new_tokens = [t for t in new_tokens if t not in stopwords.words("english")]
-    new_tokens = [t for t in new_tokens if t.isalpha()]
+    # attempt to remove 'u' from plots
+    new_tokens = [t for t in new_tokens if t not in stopwords_personalized]
+    new_tokens = [t for t in new_tokens if t.isalpha() and len(t) >= 2]
 
     lemmatizer = WordNetLemmatizer()
     new_tokens = [lemmatizer.lemmatize(t) for t in new_tokens]
@@ -106,9 +109,9 @@ def create_graph(df):
     fig, axes = plt.subplots()
     fig.suptitle("Data taken from r/Ghoststories")  # or plt.suptitle('Main title')
     if "words_in_post_title" in list(df.columns):
-        sns.barplot(x="frequency", y="words_in_post_title", data=df.head(30))
+        sns.barplot(x="frequency", y="words_in_post_title", data=df.head(25))
     else:
-        sns.barplot(x="frequency", y="words_in_post_text", data=df.head(30))
+        sns.barplot(x="frequency", y="words_in_post_text", data=df.head(25))
     plt.savefig(
         os.path.join(IMG_PATH_FILE, f"{axes.get_ylabel()}.png"),
         bbox_inches="tight",
@@ -120,7 +123,6 @@ def create_graph(df):
 def create_wordcloud(filename):
     text = read_txt_file(filename)
     wordcloud = WordCloud(colormap = 'ocean', background_color ='gold', min_font_size = 10).generate(text)
-
     # Display the generated image:
     # the matplotlib way:
     plt.imshow(wordcloud, interpolation="bilinear")
