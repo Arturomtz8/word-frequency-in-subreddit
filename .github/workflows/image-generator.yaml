@@ -2,7 +2,7 @@ name: Image generator
 
 on:
   schedule:
-    - cron: '0 22 * * *'
+    - cron: '0 03 * * *'
 jobs:
   build:
     runs-on: macos-latest
